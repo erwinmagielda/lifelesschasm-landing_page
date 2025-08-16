@@ -1,0 +1,151 @@
+/* GENERAL RESET */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body.page-body {
+  background-color: black;
+  color: white;
+  font-family: sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-image: url('bg.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* HEADER */
+.header {
+  width: 100%;
+  padding: 16px;
+  text-align: center;
+}
+.logo {
+  max-height: 128px;
+  height: auto;
+  width: 100%;
+  object-fit: contain;
+}
+.tagline {
+  margin-top: 16px;
+  font-size: 16px;
+}
+.divider {
+  width: 30%;
+  height: 2px;
+  background-color: #FED002;
+  border-radius: 12px;
+  margin: 24px auto 0;
+}
+
+/* MAIN LAYOUT */
+.main-content {
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 768px) {
+  .main-content {
+    flex-direction: row;
+    flex-grow: 1;
+    height: 100%;
+  }
+
+  .links-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .links {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; /* 🟡 Even vertical spacing */
+    height: 100%;
+  }
+}
+
+/* LINKS */
+.links-section {
+  width: 100%;
+  padding: 16px;
+}
+.links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.btn {
+  width: 80%;
+  height: 48px;
+  background-color: white;
+  color: black;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 150ms ease;
+}
+.btn:hover,
+.btn:active {
+  background-color: #FED002;
+  color: black;
+  transform: translateY(-2px);
+}
+
+/* OUT NOW SECTION */
+.out-now-section {
+  width: 100%;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.spotify-embed {
+  width: 80%;
+  border-radius: 12px;
+}
+
+/* CTA BAR */
+.cta-bar {
+  width: 100%;
+  height: 80px;
+  background-color: #FED002;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cta-button {
+  height: 48px;
+  padding: 0 40px;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 9999px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 150ms ease;
+}
+.cta-button:hover,
+.cta-button:active {
+  color: #FED002;
+  transform: translateY(-2px);
+}
+
+/* SPACER */
+.spacer {
+  height: 48px;
+}
