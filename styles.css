@@ -113,8 +113,10 @@ body.page-body {
   align-items: center;
   text-align: center;
 }
+
 .spotify-embed {
-  width: 80%;
+  width: 100%;
+  max-width: 640px;   /* 🔒 fixed maximum width */
   border-radius: 12px;
 }
 
@@ -124,11 +126,11 @@ body.page-body {
   display: flex;
   gap: 8px;
   overflow-x: auto;
-  width: 80%;
-  padding-bottom: 8px;
+  width: 100%;
+  max-width: 640px;   /* 🔒 matches player width */
+  padding-bottom: 12px;
 
-  /* scrollbars */
-  scrollbar-color: #FED002 black; /* Firefox */
+  scrollbar-color: #FED002 black;
   scrollbar-width: thin;
 }
 .album-scroll::-webkit-scrollbar {
