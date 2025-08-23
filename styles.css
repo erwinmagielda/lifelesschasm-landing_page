@@ -52,20 +52,22 @@ body.page-body {
     flex-direction: row;
     flex-grow: 1;
     height: 100%;
+    align-items: stretch;
   }
 
-  .links-section {
+  .links-section,
+  .out-now-section {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: center; /* keep symmetry */
   }
 
   .links {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-around; /* 🟡 Even vertical spacing */
-    height: 100%;
+    justify-content: space-between; /* match player column height distribution */
   }
 }
 
@@ -102,7 +104,7 @@ body.page-body {
   transform: translateY(-2px);
 }
 
-/* OUT NOW SECTION */
+/* SECTION 2: Player + selector */
 .out-now-section {
   width: 100%;
   padding: 16px;
@@ -116,7 +118,49 @@ body.page-body {
   border-radius: 12px;
 }
 
-/* CTA BAR */
+/* Album thumbnails row */
+.album-scroll {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  width: 80%;
+  padding-bottom: 8px;
+
+  /* scrollbars */
+  scrollbar-color: #FED002 black; /* Firefox */
+  scrollbar-width: thin;
+}
+.album-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+.album-scroll::-webkit-scrollbar-track {
+  background: black;
+}
+.album-scroll::-webkit-scrollbar-thumb {
+  background: #FED002;
+  border-radius: 4px;
+}
+
+.album-thumb {
+  flex: 0 0 auto;
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  opacity: 0.5;              /* unclicked look */
+  cursor: pointer;
+  transition: opacity 0.3s ease, border 0.3s ease;
+}
+.album-thumb:hover {
+  opacity: 1;                /* hover reveals */
+}
+.album-thumb.active {
+  border: 2px solid #FED002; /* selected */
+  opacity: 1;
+}
+
+/* SECTION 3: CTA */
 .cta-bar {
   width: 100%;
   height: 80px;
@@ -124,6 +168,7 @@ body.page-body {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 48px; /* spacer above CTA */
 }
 .cta-button {
   height: 48px;
@@ -143,9 +188,4 @@ body.page-body {
 .cta-button:active {
   color: #FED002;
   transform: translateY(-2px);
-}
-
-/* SPACER */
-.spacer {
-  height: 48px;
 }

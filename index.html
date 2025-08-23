@@ -18,7 +18,7 @@
   </header>
 
   <main class="main-content">
-    <!-- LINKS SECTION -->
+    <!-- SECTION 1: Links -->
     <section class="links-section">
       <div class="links">
         <a href="https://open.spotify.com/playlist/2S8VvIN52Cx60xkJ2Vn1gi" class="btn">Spotify</a>
@@ -29,9 +29,9 @@
       </div>
     </section>
 
-    <!-- OUT NOW SECTION -->
+    <!-- SECTION 2: Spotify + Album Selector -->
     <section class="out-now-section">
-    <iframe 
+      <iframe 
         class="spotify-embed" 
         src="https://open.spotify.com/embed/album/1rPMzfwjEe1U5y4m2yS6RM?utm_source=generator" 
         height="352" 
@@ -39,15 +39,58 @@
         allowfullscreen 
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
         loading="lazy">
-    </iframe>
+      </iframe>
+
+      <!-- Thumbs (placeholder image + same embed for now).
+           Replace each data-embed with real album embed URLs later. -->
+      <div class="album-scroll">
+        <img src="https://f4.bcbits.com/img/a1941112033_10.jpg" class="album-thumb active" alt="Album 1"
+             data-embed="https://open.spotify.com/embed/album/1rPMzfwjEe1U5y4m2yS6RM?utm_source=selector" />
+        <img src="https://f4.bcbits.com/img/a1941112033_10.jpg" class="album-thumb" alt="Album 2"
+             data-embed="https://open.spotify.com/embed/album/1rPMzfwjEe1U5y4m2yS6RM?utm_source=selector" />
+        <img src="https://f4.bcbits.com/img/a1941112033_10.jpg" class="album-thumb" alt="Album 3"
+             data-embed="https://open.spotify.com/embed/album/1rPMzfwjEe1U5y4m2yS6RM?utm_source=selector" />
+        <img src="https://f4.bcbits.com/img/a1941112033_10.jpg" class="album-thumb" alt="Album 4"
+             data-embed="https://open.spotify.com/embed/album/1rPMzfwjEe1U5y4m2yS6RM?utm_source=selector" />
+        <img src="https://f4.bcbits.com/img/a1941112033_10.jpg" class="album-thumb" alt="Album 5"
+             data-embed="https://open.spotify.com/embed/album/1rPMzfwjEe1U5y4m2yS6RM?utm_source=selector" />
+        <img src="https://f4.bcbits.com/img/a1941112033_10.jpg" class="album-thumb" alt="Album 6"
+             data-embed="https://open.spotify.com/embed/album/1rPMzfwjEe1U5y4m2yS6RM?utm_source=selector" />
+        <img src="https://f4.bcbits.com/img/a1941112033_10.jpg" class="album-thumb" alt="Album 7"
+             data-embed="https://open.spotify.com/embed/album/1rPMzfwjEe1U5y4m2yS6RM?utm_source=selector" />
+        <img src="https://f4.bcbits.com/img/a1941112033_10.jpg" class="album-thumb" alt="Album 8"
+             data-embed="https://open.spotify.com/embed/album/1rPMzfwjEe1U5y4m2yS6RM?utm_source=selector" />
+        <img src="https://f4.bcbits.com/img/a1941112033_10.jpg" class="album-thumb" alt="Album 9"
+             data-embed="https://open.spotify.com/embed/album/1rPMzfwjEe1U5y4m2yS6RM?utm_source=selector" />
+        <img src="https://f4.bcbits.com/img/a1941112033_10.jpg" class="album-thumb" alt="Album 10"
+             data-embed="https://open.spotify.com/embed/album/1rPMzfwjEe1U5y4m2yS6RM?utm_source=selector" />
+      </div>
     </section>
   </main>
 
-  <div class="spacer"></div>
-
+  <!-- SECTION 3: CTA -->
   <div class="cta-bar">
     <a href="http://eepurl.com/hjynl5" class="cta-button">Join Newsletter</a>
   </div>
 
+  <!-- Tiny JS: handle active state + (optional) swap embed -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const player = document.querySelector('.spotify-embed');
+      const thumbs = document.querySelectorAll('.album-thumb');
+
+      thumbs.forEach((thumb) => {
+        thumb.addEventListener('click', () => {
+          document.querySelector('.album-thumb.active')?.classList.remove('active');
+          thumb.classList.add('active');
+
+          const newSrc = thumb.dataset.embed;
+          if (newSrc && player.src !== newSrc) {
+            player.src = newSrc; // swap album (same URL for now)
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
