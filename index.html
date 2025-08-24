@@ -23,24 +23,31 @@
       <div class="links">
         <a href="https://open.spotify.com/playlist/2S8VvIN52Cx60xkJ2Vn1gi" class="btn">Spotify</a>
         <a href="https://lifelesschasm.uk/" class="btn">Shop</a>
+        <a href="https://www.abyssaladornments.com" class="btn">Chains</a>
         <a href="https://www.instagram.com/lifelesschasmrecords/" class="btn">Instagram</a>
         <a href="https://lifelesschasm.bandcamp.com/music" class="btn">Bandcamp</a>
         <a href="https://www.youtube.com/@lifelesschasmrecords" class="btn">YouTube</a>
-        <a href="https://www.abyssaladornments.com" class="btn">Abyssal Adornments</a>
       </div>
     </section>
 
     <!-- SECTION 2: Spotify + Album Selector -->
     <section class="out-now-section">
-      <iframe 
-        class="spotify-embed" 
-        src="https://open.spotify.com/embed/album/1rPMzfwjEe1U5y4m2yS6RM?utm_source=generator" 
-        height="352" 
-        frameborder="0" 
-        allowfullscreen 
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-        loading="lazy">
-      </iframe>
+      <div class="player-wrap">
+  <iframe 
+    class="spotify-embed active"
+    src="https://open.spotify.com/embed/album/1rPMzfwjEe1U5y4m2yS6RM"
+    height="352"
+    frameborder="0"
+    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+    loading="lazy"></iframe>
+
+  <iframe 
+    class="spotify-embed buffer"
+    height="352"
+    frameborder="0"
+    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+    aria-hidden="true"></iframe>
+</div>
 
       <!-- Thumbs (placeholder image + same embed for now).
            Replace each data-embed with real album embed URLs later. -->
@@ -89,23 +96,59 @@
   </div>
 
   <!-- Tiny JS: handle active state + (optional) swap embed -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const player = document.querySelector('.spotify-embed');
-      const thumbs = document.querySelectorAll('.album-thumb');
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const wrap   = document.querySelector('.player-wrap');
+  const thumbs = document.querySelectorAll('.album-thumb');
 
-      thumbs.forEach((thumb) => {
-        thumb.addEventListener('click', () => {
-          document.querySelector('.album-thumb.active')?.classList.remove('active');
-          thumb.classList.add('active');
+  const front  = () => wrap.querySelector('.spotify-embed.active');
+  const buffer = () => wrap.querySelector('.spotify-embed.buffer');
 
-          const newSrc = thumb.dataset.embed;
-          if (newSrc && player.src !== newSrc) {
-            player.src = newSrc; // swap album (same URL for now)
-          }
-        });
-      });
+  let animating = false;
+
+  function swapTo(src) {
+    if (animating) return;
+
+    const f = front();
+    const b = buffer();
+
+    if (!src || f.src === src) return;
+
+    animating = true;
+    b.src = src;
+
+    const onLoad = () => {
+      b.removeEventListener('load', onLoad);
+
+      // Ensure the browser lays out the buffer before we start the fade
+      // (prevents a one-frame flash on some machines)
+      b.offsetHeight; // force reflow
+
+      // Crossfade
+      b.classList.add('active');
+      f.classList.remove('active');
+
+      // After the CSS transition, swap roles and unlock
+      const onTransitionEnd = () => {
+        b.removeEventListener('transitionend', onTransitionEnd);
+        f.classList.add('buffer');
+        b.classList.remove('buffer');
+        animating = false;
+      };
+      b.addEventListener('transitionend', onTransitionEnd);
+    };
+
+    b.addEventListener('load', onLoad, { once: true });
+  }
+
+  thumbs.forEach((t) => {
+    t.addEventListener('click', () => {
+      document.querySelector('.album-thumb.active')?.classList.remove('active');
+      t.classList.add('active');
+      swapTo(t.dataset.embed);
     });
-  </script>
+  });
+});
+</script>
 </body>
 </html>
