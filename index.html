@@ -150,5 +150,32 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
+<!-- SECTION X: Statistics -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const post = (data) => fetch('log.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(data)
+  });
+
+  // log visit
+  post({ event: 'visit' });
+
+  // log button clicks
+  document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      post({ event: 'click', button: btn.textContent.trim() });
+    });
+  });
+
+  // log album clicks
+  document.querySelectorAll('.album-thumb').forEach(thumb => {
+    thumb.addEventListener('click', () => {
+      post({ event: 'click', button: 'album:' + (thumb.alt || 'unknown') });
+    });
+  });
+});
+</script>
 </body>
 </html>
