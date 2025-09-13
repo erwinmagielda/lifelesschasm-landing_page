@@ -61,18 +61,6 @@ body.page-body{
   width: 100%; padding: 16px; display: flex; flex-direction: column; align-items: center; text-align: center;
 }
 
-/* label “Out Now” above the player */
-.out-now-title{
-  width: var(--inner-w);
-  max-width: var(--max-w);
-  margin: 0 auto 10px;
-  font-size: 18px;
-  letter-spacing: 0.5px;
-  color: #fff;
-  text-transform: uppercase;
-  opacity: 0.9;
-}
-
 /* Player width matches buttons */
 .spotify-embed{
   width: var(--inner-w); max-width: var(--max-w);
@@ -167,20 +155,30 @@ a.btn:focus-visible,
   .out-now-section { padding-top: 24px; padding-bottom: 24px; }
 }
 
-/* ========== FOOTER ========== */
-/* sits at bottom; black background with accent text */
+/* ========== FOOTER (fixed + centered) ========== */
 .site-footer{
-  background: #000;
-  color: var(--accent);
+  background: #000;              /* black as requested */
+  color: var(--accent);          /* #FED002 via variable */
   margin-top: 32px;
-  border-top: 1px solid rgba(255,255,255,0.06); /* subtle hairline */
+  border-top: 1px solid rgba(255,255,255,0.06);
+  width: 100%;
 }
+
 .footer-inner{
-  width: var(--inner-w);
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 14px 0 18px;
+  /* full-bleed container so it doesn’t look “off” on wide screens */
+  width: 100%;
+  max-width: none;
+  padding: 16px 20px;
+  
+  /* hard-center the content horizontally and vertically */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+}
+
+.footer-inner small{
+  /* tighten the type a touch so it doesn’t feel floaty */
   font-size: 13px;
   letter-spacing: 0.3px;
   line-height: 1.6;
