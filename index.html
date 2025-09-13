@@ -1,25 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- meta + title -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lifeless Chasm Records</title>
+
+  <!-- favicon + styles -->
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="page-body">
 
+  <!-- ====== HEADER ====== -->
   <header class="header">
+    <!-- my logo sits on top; responsive with max-height in CSS -->
     <img src="logo.png" alt="Lifeless Chasm Records" class="logo" />
+    <!-- short label line -->
     <p class="tagline">
       Death and grind label from London, UK. Limited merch runs and curated distro.
     </p>
+    <!-- small accent divider under the header -->
     <div class="divider"></div>
   </header>
 
+  <!-- ====== MAIN AREA (two columns on md+, stacked on mobile) ====== -->
   <main class="main-content">
-    <!-- SECTION 1: Links -->
-    <section class="links-section">
+    <!-- LEFT: quick links (acts like a primary nav) -->
+    <nav class="links-section" aria-label="Primary">
+      <!-- inner column of rounded buttons -->
       <div class="links">
         <a href="https://open.spotify.com/playlist/2S8VvIN52Cx60xkJ2Vn1gi" class="btn">Spotify</a>
         <a href="https://lifelesschasm.shop/" class="btn">Shop</a>
@@ -28,154 +37,200 @@
         <a href="https://lifelesschasm.bandcamp.com/music" class="btn">Bandcamp</a>
         <a href="https://www.youtube.com/@lifelesschasmrecords" class="btn">YouTube</a>
       </div>
-    </section>
+    </nav>
 
-    <!-- SECTION 2: Spotify + Album Selector -->
-    <section class="out-now-section">
+    <!-- RIGHT: Out Now player + scrolling album selector -->
+    <section class="out-now-section" aria-labelledby="out-now-title">
+      <!-- small section label above the player -->
+      <h2 id="out-now-title" class="out-now-title">Out Now</h2>
+
+      <!-- I keep two iframes for a smooth crossfade:
+           - .active = currently visible/playing
+           - .buffer = loads next album quietly and fades in on swap
+           NOTE: I explicitly unload the old one after fade to prevent double audio. -->
       <div class="player-wrap">
-  <iframe 
-    class="spotify-embed active"
-    src="https://open.spotify.com/embed/album/1rPMzfwjEe1U5y4m2yS6RM"
-    height="352"
-    frameborder="0"
-    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-    loading="lazy"></iframe>
+        <iframe 
+          class="spotify-embed active"
+          src="https://open.spotify.com/embed/album/1rPMzfwjEe1U5y4m2yS6RM"
+          height="352"
+          frameborder="0"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy"></iframe>
 
-  <iframe 
-    class="spotify-embed buffer"
-    height="352"
-    frameborder="0"
-    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-    aria-hidden="true"></iframe>
-</div>
+        <!-- start with no src so it sits idle until first swap -->
+        <iframe 
+          class="spotify-embed buffer"
+          height="352"
+          frameborder="0"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          aria-hidden="true"></iframe>
+      </div>
 
-      <!-- Thumbs (placeholder image + same embed for now).
-           Replace each data-embed with real album embed URLs later. -->
-      <div class="album-scroll">
-        <img src="https://f4.bcbits.com/img/a1941112033_10.jpg" class="album-thumb active" alt="Album 1"
+      <!-- horizontally scrolling album thumbs; clicking swaps the embed -->
+      <div class="album-scroll" aria-label="Album selector">
+        <!-- thumbs (data-embed holds the Spotify album embed URL) -->
+        <img src="https://f4.bcbits.com/img/a1941112033_10.jpg" class="album-thumb active" alt="Enter The Void"
              data-embed="https://open.spotify.com/embed/album/1rPMzfwjEe1U5y4m2yS6RM?utm_source=generator" />
-        <img src="https://f4.bcbits.com/img/a3099047217_10.jpg" class="album-thumb" alt="Album 2"
+        <img src="https://f4.bcbits.com/img/a3099047217_10.jpg" class="album-thumb" alt="2"
              data-embed="https://open.spotify.com/embed/album/04up0mB7jaRoJjeVJ6aVFe?utm_source=generator" />
-        <img src="https://f4.bcbits.com/img/a0926201714_10.jpg" class="album-thumb" alt="Album 3"
+        <img src="https://f4.bcbits.com/img/a0926201714_10.jpg" class="album-thumb" alt="Broken Human Kingdom"
              data-embed="https://open.spotify.com/embed/album/7Mx8EZ0mAjH3qkDq9wpBjk?utm_source=generator" />
-        <img src="https://f4.bcbits.com/img/a2873414988_10.jpg" class="album-thumb" alt="Album 4"
+        <img src="https://f4.bcbits.com/img/a2873414988_10.jpg" class="album-thumb" alt="Aphelion Entity"
              data-embed="https://open.spotify.com/embed/album/4TX5Rnhq4Y5HBGiFop0nF8?utm_source=generator" />
-        <img src="https://f4.bcbits.com/img/a3146167911_10.jpg" class="album-thumb" alt="Album 5"
+        <img src="https://f4.bcbits.com/img/a3146167911_10.jpg" class="album-thumb" alt="Psychic Incarceration"
              data-embed="https://open.spotify.com/embed/album/5Yu3WnJCEbMuMja5mzlECm?utm_source=generator" />
-        <img src="https://f4.bcbits.com/img/a4238288575_10.jpg" class="album-thumb" alt="Album 6"
+        <img src="https://f4.bcbits.com/img/a4238288575_10.jpg" class="album-thumb" alt="Entrail Asphyxiation"
              data-embed="https://open.spotify.com/embed/album/2OAUVPHM5Yo6hPRUQ6luXV?utm_source=generator" />
-        <img src="https://f4.bcbits.com/img/a2527835941_10.jpg" class="album-thumb" alt="Album 7"
+        <img src="https://f4.bcbits.com/img/a2527835941_10.jpg" class="album-thumb" alt="Twisted Forms"
              data-embed="https://open.spotify.com/embed/album/2o0k4cLkVKvRtF5U0FnHuh?utm_source=generator" />
-        <img src="https://f4.bcbits.com/img/a3107737857_10.jpg" class="album-thumb" alt="Album 8"
+        <img src="https://f4.bcbits.com/img/a3107737857_10.jpg" class="album-thumb" alt="Depraved Ingestion Of Cranial Discharge"
              data-embed="https://open.spotify.com/embed/album/71WLDSHOBFplaqYMXpKN7L?utm_source=generator" />
-        <img src="https://f4.bcbits.com/img/a2649628343_10.jpg" class="album-thumb" alt="Album 9"
+        <img src="https://f4.bcbits.com/img/a2649628343_10.jpg" class="album-thumb" alt="Item 9"
              data-embed="https://open.spotify.com/embed/album/21ZPOciZUs4rLXNKp4UgHi?utm_source=generator" />
-        <img src="https://f4.bcbits.com/img/a1951790843_10.jpg" class="album-thumb" alt="Album 10"
+        <img src="https://f4.bcbits.com/img/a1951790843_10.jpg" class="album-thumb" alt="Demo 2021"
              data-embed="https://open.spotify.com/embed/album/5b9K9LOCBtLEDWA6cy3aC0?utm_source=generator" />
-        <img src="https://f4.bcbits.com/img/a2851019202_10.jpg" class="album-thumb" alt="Album 11"
+        <img src="https://f4.bcbits.com/img/a2851019202_10.jpg" class="album-thumb" alt="Webdriver Torso"
              data-embed="https://open.spotify.com/embed/album/4hxMBrwQ2NfR3guGLZehVx?utm_source=generator" />
-        <img src="kuvotus-unisol-thumb.jpg" class="album-thumb" alt="Album 12"
+        <img src="kuvotus-unisol-thumb.jpg" class="album-thumb" alt="Unisolmuirvistys (Kuvotus)"
              data-embed="https://open.spotify.com/embed/album/23jAH5T2IvJqsveCkS3fqq?utm_source=generator" />
-        <img src="tunkio-unisol-thumb.jpg" class="album-thumb" alt="Album 13"
+        <img src="tunkio-unisol-thumb.jpg" class="album-thumb" alt="Unisolmuirvistys (Tunkio)"
              data-embed="https://open.spotify.com/embed/album/6Ye9YfEQX6epCCjF912vWC?utm_source=generator" />
-        <img src="https://f4.bcbits.com/img/a3033947065_10.jpg" class="album-thumb" alt="Album 14"
+        <img src="https://f4.bcbits.com/img/a3033947065_10.jpg" class="album-thumb" alt="Chloroma"
              data-embed="https://open.spotify.com/embed/album/6FeSWWq02TlV5OrBRkXAVO?utm_source=generator" />
-        <img src="https://f4.bcbits.com/img/a0038734818_10.jpg" class="album-thumb" alt="Album 15"
+        <img src="https://f4.bcbits.com/img/a0038734818_10.jpg" class="album-thumb" alt="The Innards Of A Charred Cadaver"
              data-embed="https://open.spotify.com/embed/album/7A0tHCfyL76SaA2NhVK84j?utm_source=generator" />
-        <img src="https://f4.bcbits.com/img/a1309063621_10.jpg" class="album-thumb" alt="Album 16"
+        <img src="https://f4.bcbits.com/img/a1309063621_10.jpg" class="album-thumb" alt="Analytic Session"
              data-embed="https://open.spotify.com/embed/album/1OvNsoKCasdmKmgGjrf6q7?utm_source=generator" />
-        <img src="https://f4.bcbits.com/img/a3043879441_10.jpg" class="album-thumb" alt="Album 17"
+        <img src="https://f4.bcbits.com/img/a3043879441_10.jpg" class="album-thumb" alt="Apathy"
              data-embed="https://open.spotify.com/embed/album/3Pi9SmD8oeW75p6qkvbOzL?utm_source=generator" />
       </div>
     </section>
   </main>
 
-  <!-- SECTION 3: CTA -->
+  <!-- ====== CTA BAR ====== -->
   <div class="cta-bar">
+    <!-- newsletter button pinned in a bright bar -->
     <a href="http://eepurl.com/hjynl5" class="cta-button">Join Newsletter</a>
   </div>
 
-  <!-- Tiny JS: handle active state + (optional) swap embed -->
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const wrap   = document.querySelector('.player-wrap');
-  const thumbs = document.querySelectorAll('.album-thumb');
+  <!-- ====== FOOTER ====== -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <!-- exactly as requested; black background, #FED002 text in CSS -->
+      <small>Built by Erwin Magielda © 2025 — All Rights Reserved</small>
+    </div>
+  </footer>
 
-  const front  = () => wrap.querySelector('.spotify-embed.active');
-  const buffer = () => wrap.querySelector('.spotify-embed.buffer');
+  <!-- ====== JS: crossfade + single-player enforcement ====== -->
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // cache the wrapper and all album thumbnails once
+    const wrap   = document.querySelector('.player-wrap');
+    const thumbs = document.querySelectorAll('.album-thumb');
 
-  let animating = false;
+    // helpers to grab the front (visible) and buffer (hidden) players
+    const front  = () => wrap.querySelector('.spotify-embed.active');
+    const buffer = () => wrap.querySelector('.spotify-embed.buffer');
 
-  function swapTo(src) {
-    if (animating) return;
+    // simple guard to avoid overlapping transitions
+    let animating = false;
 
-    const f = front();
-    const b = buffer();
+    // swapTo() crossfades to a new embed URL
+    function swapTo(src) {
+      if (animating) return;                 // if already mid-animation, bail
+      const f = front();
+      const b = buffer();
+      if (!src || f.src === src) return;     // ignore if same URL
 
-    if (!src || f.src === src) return;
+      animating = true;
 
-    animating = true;
-    b.src = src;
+      // load the next album into the buffer iframe
+      // note: autoplay is allowed on the iframe; Spotify handles mute/policy
+      b.src = src;
 
-    const onLoad = () => {
-      b.removeEventListener('load', onLoad);
+      // once buffer fully loads, start the visual crossfade
+      const onLoad = () => {
+        b.removeEventListener('load', onLoad);
 
-      // Ensure the browser lays out the buffer before we start the fade
-      // (prevents a one-frame flash on some machines)
-      b.offsetHeight; // force reflow
+        // force layout so the fade doesn't flash on some GPUs
+        b.offsetHeight;
 
-      // Crossfade
-      b.classList.add('active');
-      f.classList.remove('active');
+        // bring buffer to front
+        b.classList.add('active');
+        f.classList.remove('active');
 
-      // After the CSS transition, swap roles and unlock
-      const onTransitionEnd = () => {
-        b.removeEventListener('transitionend', onTransitionEnd);
-        f.classList.add('buffer');
-        b.classList.remove('buffer');
-        animating = false;
+        // when the fade completes, clean up:
+        // 1) UNLOAD the old iframe so its audio stops (fixes "two tracks playing")
+        // 2) swap role classes (old -> .buffer, new -> no .buffer)
+        const onTransitionEnd = () => {
+          b.removeEventListener('transitionend', onTransitionEnd);
+
+          // hard stop the outgoing player by unloading it
+          // (blanking src guarantees only one embed is ever playing)
+          f.src = 'about:blank';
+
+          // swap roles
+          f.classList.add('buffer');
+          b.classList.remove('buffer');
+
+          animating = false;
+        };
+        b.addEventListener('transitionend', onTransitionEnd);
       };
-      b.addEventListener('transitionend', onTransitionEnd);
-    };
 
-    b.addEventListener('load', onLoad, { once: true });
-  }
+      // run the handler once when the buffer has loaded
+      b.addEventListener('load', onLoad, { once: true });
+    }
 
-  thumbs.forEach((t) => {
-    t.addEventListener('click', () => {
-      document.querySelector('.album-thumb.active')?.classList.remove('active');
-      t.classList.add('active');
-      swapTo(t.dataset.embed);
+    // click binding for each thumb:
+    // - move the "active" visual state
+    // - request the swap to that album's embed
+    thumbs.forEach((t) => {
+      t.addEventListener('click', () => {
+        document.querySelector('.album-thumb.active')?.classList.remove('active');
+        t.classList.add('active');
+        swapTo(t.dataset.embed);
+      });
+
+      // optional: allow keyboard activation (Enter)
+      t.tabIndex = 0;
+      t.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          t.click();
+          e.preventDefault();
+        }
+      });
     });
   });
-});
-</script>
-<!-- SECTION X: Statistics -->
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const post = (data) => fetch('log.php', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams(data)
-  });
+  </script>
 
-  // log visit
-  post({ event: 'visit' });
+  <!-- ====== JS: lightweight analytics (visit + clicks) ====== -->
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // tiny helper to send form-encoded POSTs to my PHP logger
+    const post = (data) => fetch('log.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(data)
+    });
 
-  // log button clicks
-  document.querySelectorAll('.btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      post({ event: 'click', button: btn.textContent.trim() });
+    // mark page load
+    post({ event: 'visit' });
+
+    // mark button clicks
+    document.querySelectorAll('.btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        post({ event: 'click', button: btn.textContent.trim() });
+      });
+    });
+
+    // mark album selections
+    document.querySelectorAll('.album-thumb').forEach(thumb => {
+      thumb.addEventListener('click', () => {
+        post({ event: 'click', button: 'album:' + (thumb.alt || 'unknown') });
+      });
     });
   });
-
-  // log album clicks
-  document.querySelectorAll('.album-thumb').forEach(thumb => {
-    thumb.addEventListener('click', () => {
-      post({ event: 'click', button: 'album:' + (thumb.alt || 'unknown') });
-    });
-  });
-});
-</script>
+  </script>
 </body>
 </html>
