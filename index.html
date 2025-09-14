@@ -12,23 +12,23 @@
 </head>
 <body class="page-body">
 
-  <!-- ====== HEADER ====== -->
+  <!-- header: logo + short tagline -->
   <header class="header">
-    <!-- my logo sits on top; responsive with max-height in CSS -->
+    <!-- branding mark on top; responsive sizing handled in css -->
     <img src="logo.png" alt="Lifeless Chasm Records" class="logo" />
-    <!-- short label line -->
+    <!-- short descriptive line under logo -->
     <p class="tagline">
       Death and grind label from London, UK. Limited merch runs and curated distro.
     </p>
-    <!-- small accent divider under the header -->
+    <!-- thin accent divider for visual separation -->
     <div class="divider"></div>
   </header>
 
-  <!-- ====== MAIN AREA (two columns on md+, stacked on mobile) ====== -->
+  <!-- main area: two columns on md+, stacked on mobile -->
   <main class="main-content">
-    <!-- LEFT: quick links (acts like a primary nav) -->
-    <nav class="links-section" aria-label="Primary">
-      <!-- inner column of rounded buttons -->
+    <!-- primary links block -->
+    <nav class="links-section" aria-label="primary links">
+      <!-- vertical stack of rounded buttons -->
       <div class="links">
         <a href="https://open.spotify.com/playlist/2S8VvIN52Cx60xkJ2Vn1gi" class="btn">Spotify</a>
         <a href="https://lifelesschasm.shop/" class="btn">Shop</a>
@@ -39,13 +39,12 @@
       </div>
     </nav>
 
-    <!-- RIGHT: Out Now player + scrolling album selector -->
-    <section class="out-now-section" aria-labelledby="out-now-title">
-
-      <!-- I keep two iframes for a smooth crossfade:
-           - .active = currently visible/playing
-           - .buffer = loads next album quietly and fades in on swap
-           NOTE: I explicitly unload the old one after fade to prevent double audio. -->
+    <!-- player + album selector -->
+    <section class="out-now-section" aria-label="album player and selector">
+      <!-- two iframes used to crossfade:
+           .active = visible/playing
+           .buffer = preloads next, fades in on swap
+           old iframe unloaded after fade to stop audio -->
       <div class="player-wrap">
         <iframe 
           class="spotify-embed active"
@@ -55,7 +54,7 @@
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
           loading="lazy"></iframe>
 
-        <!-- start with no src so it sits idle until first swap -->
+        <!-- idle until first swap -->
         <iframe 
           class="spotify-embed buffer"
           height="352"
@@ -64,9 +63,9 @@
           aria-hidden="true"></iframe>
       </div>
 
-      <!-- horizontally scrolling album thumbs; clicking swaps the embed -->
-      <div class="album-scroll" aria-label="Album selector">
-        <!-- thumbs (data-embed holds the Spotify album embed URL) -->
+      <!-- horizontal album strip; clicking a thumb swaps the embed -->
+      <div class="album-scroll" aria-label="album selector">
+        <!-- data-embed holds the spotify album url -->
         <img src="https://f4.bcbits.com/img/a1941112033_10.jpg" class="album-thumb active" alt="Enter The Void"
              data-embed="https://open.spotify.com/embed/album/1rPMzfwjEe1U5y4m2yS6RM?utm_source=generator" />
         <img src="https://f4.bcbits.com/img/a3099047217_10.jpg" class="album-thumb" alt="2"
@@ -105,69 +104,59 @@
     </section>
   </main>
 
-  <!-- ====== CTA BAR ====== -->
+  <!-- cta bar: newsletter link in accent strip -->
   <div class="cta-bar">
-    <!-- newsletter button pinned in a bright bar -->
     <a href="http://eepurl.com/hjynl5" class="cta-button">Join Newsletter</a>
   </div>
 
-  <!-- ====== FOOTER ====== -->
+  <!-- footer: transparent background + centered text -->
   <footer class="site-footer" role="contentinfo">
     <div class="footer-inner">
-      <!-- exactly as requested; black background, #FED002 text in CSS -->
       <small>Built by Erwin Magielda © 2025 — All Rights Reserved</small>
     </div>
   </footer>
 
-  <!-- ====== JS: crossfade + single-player enforcement ====== -->
+  <!-- js: crossfade player + single-embed enforcement -->
   <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // cache the wrapper and all album thumbnails once
+    /* caching wrapper + thumbs for quick access */
     const wrap   = document.querySelector('.player-wrap');
     const thumbs = document.querySelectorAll('.album-thumb');
 
-    // helpers to grab the front (visible) and buffer (hidden) players
+    /* helpers to reference current/front and hidden/buffer iframes */
     const front  = () => wrap.querySelector('.spotify-embed.active');
     const buffer = () => wrap.querySelector('.spotify-embed.buffer');
 
-    // simple guard to avoid overlapping transitions
+    /* guard to avoid overlapping transitions */
     let animating = false;
 
-    // swapTo() crossfades to a new embed URL
+    /* crossfading to a new embed; old src blanked to stop audio */
     function swapTo(src) {
-      if (animating) return;                 // if already mid-animation, bail
+      if (animating) return;
       const f = front();
       const b = buffer();
-      if (!src || f.src === src) return;     // ignore if same URL
+      if (!src || f.src === src) return;
 
       animating = true;
-
-      // load the next album into the buffer iframe
-      // note: autoplay is allowed on the iframe; Spotify handles mute/policy
       b.src = src;
 
-      // once buffer fully loads, start the visual crossfade
       const onLoad = () => {
         b.removeEventListener('load', onLoad);
 
-        // force layout so the fade doesn't flash on some GPUs
+        /* ensure layout pass before starting fade */
         b.offsetHeight;
 
-        // bring buffer to front
+        /* fade in buffer, fade out front */
         b.classList.add('active');
         f.classList.remove('active');
 
-        // when the fade completes, clean up:
-        // 1) UNLOAD the old iframe so its audio stops (fixes "two tracks playing")
-        // 2) swap role classes (old -> .buffer, new -> no .buffer)
         const onTransitionEnd = () => {
           b.removeEventListener('transitionend', onTransitionEnd);
 
-          // hard stop the outgoing player by unloading it
-          // (blanking src guarantees only one embed is ever playing)
+          /* kill audio from old frame */
           f.src = 'about:blank';
 
-          // swap roles
+          /* swap roles */
           f.classList.add('buffer');
           b.classList.remove('buffer');
 
@@ -176,13 +165,10 @@
         b.addEventListener('transitionend', onTransitionEnd);
       };
 
-      // run the handler once when the buffer has loaded
       b.addEventListener('load', onLoad, { once: true });
     }
 
-    // click binding for each thumb:
-    // - move the "active" visual state
-    // - request the swap to that album's embed
+    /* click + keyboard activation for thumbs */
     thumbs.forEach((t) => {
       t.addEventListener('click', () => {
         document.querySelector('.album-thumb.active')?.classList.remove('active');
@@ -190,7 +176,6 @@
         swapTo(t.dataset.embed);
       });
 
-      // optional: allow keyboard activation (Enter)
       t.tabIndex = 0;
       t.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -202,27 +187,27 @@
   });
   </script>
 
-  <!-- ====== JS: lightweight analytics (visit + clicks) ====== -->
+  <!-- js: lightweight analytics (visit + clicks) -->
   <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // tiny helper to send form-encoded POSTs to my PHP logger
+    /* small helper to send form-encoded posts to logger */
     const post = (data) => fetch('log.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams(data)
     });
 
-    // mark page load
+    /* mark visit */
     post({ event: 'visit' });
 
-    // mark button clicks
+    /* mark link button clicks */
     document.querySelectorAll('.btn').forEach(btn => {
       btn.addEventListener('click', () => {
         post({ event: 'click', button: btn.textContent.trim() });
       });
     });
 
-    // mark album selections
+    /* mark album selections */
     document.querySelectorAll('.album-thumb').forEach(thumb => {
       thumb.addEventListener('click', () => {
         post({ event: 'click', button: 'album:' + (thumb.alt || 'unknown') });
