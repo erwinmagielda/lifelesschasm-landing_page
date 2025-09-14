@@ -1,3 +1,2 @@
 # Secrets (DO NOT COMMIT)
-db_config.php
-admin.php
+credentials.json
