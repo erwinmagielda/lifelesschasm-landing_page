@@ -20,6 +20,14 @@ body.page-body{
   flex-direction: column;
 }
 
+/* mobile: fixed background causes scroll jank, so disable it */
+@media (max-width: 1024px){
+  body.page-body{
+    background-attachment: scroll;
+    background-position: center top;
+  }
+}
+
 /* ===== header ===== */
 /* centered logo + tagline + divider */
 .header{ width: 100%; padding: 16px; text-align: center; }
